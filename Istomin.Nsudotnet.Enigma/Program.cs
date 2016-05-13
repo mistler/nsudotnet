@@ -19,8 +19,8 @@ namespace Istomin.Nsudotnet.Enigma
 
                 if (direction == "encrypt")
                 {
-                    Archiver archiver = new Archiver(algorithm);
-                    archiver.Encode(input, output);
+                    Encryptor encryptor = new Encryptor(algorithm);
+                    encryptor.Encrypt(input, output);
                     return;
                 }
             }
@@ -34,13 +34,13 @@ namespace Istomin.Nsudotnet.Enigma
 
                 if (direction == "decrypt")
                 {
-                    Archiver archiver = new Archiver(algorithm);
-                    archiver.Decode(input, output, key);
+                    Encryptor encryptor = new Encryptor(algorithm);
+                    encryptor.Decrypt(input, output, key);
                     return;
                 }
             }
 
-            System.Console.WriteLine("Incorrect argument count!");
+            System.Console.WriteLine("Incorrect arguments!");
             System.Console.WriteLine("Usage:");
             System.Console.WriteLine("\tEncryption: crypto.exe encrypt <input> <algorithm> <output>");
             System.Console.WriteLine("\tDecryption: crypto.exe decrypt <input> <algorithm> <key_file> <output>");

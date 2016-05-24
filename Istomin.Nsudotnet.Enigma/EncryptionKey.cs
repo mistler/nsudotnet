@@ -9,15 +9,10 @@ namespace Istomin.Nsudotnet.Enigma
 {
     class EncryptionKey
     {
-        public EncryptionKey(string base64String)
+        public EncryptionKey(string IV, string key)
         {
-            byte[] bytes = Convert.FromBase64String(base64String);
-            int IVLength = BitConverter.ToInt32(bytes, 0);
-            int keyLength = bytes.Length - sizeof(int) - IVLength;
-            this.IV = new byte[IVLength];
-            this.Key = new byte[keyLength];
-            Array.Copy(bytes, sizeof(int), this.IV, 0, IVLength);
-            Array.Copy(bytes, sizeof(int) + IVLength, this.Key, 0, keyLength);
+            this.IV = Convert.FromBase64String(IV);
+            this.Key = Convert.FromBase64String(key);
         }
 
         public EncryptionKey(byte[] key, byte[] IV)
@@ -28,10 +23,10 @@ namespace Istomin.Nsudotnet.Enigma
 
         public override string ToString()
         {
-            int IVLength = IV.Length;
-            byte[] bytesIVLength = BitConverter.GetBytes(IVLength);
-            IEnumerable<byte> rv = bytesIVLength.Concat(IV).Concat(Key);
-            return Convert.ToBase64String(rv.ToArray());
+            string IVString = Convert.ToBase64String(IV);
+            string KeyString = Convert.ToBase64String(Key);
+            string outputString = String.Format("{0}{1}{2}", IVString, Environment.NewLine, KeyString);
+            return outputString;
         }
 
         public byte[] Key { get; set; }

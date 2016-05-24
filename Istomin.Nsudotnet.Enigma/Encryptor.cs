@@ -71,7 +71,9 @@ namespace Istomin.Nsudotnet.Enigma
                 EncryptionKey key = null;
                 using (StreamReader keyStreamReader = new StreamReader(keyStream))
                 {
-                    key = new EncryptionKey(keyStreamReader.ReadToEnd());
+                    string IVString = keyStreamReader.ReadLine();
+                    string KeyString = keyStreamReader.ReadLine();
+                    key = new EncryptionKey(IVString, KeyString);
                 }
                 
                 using (SymmetricAlgorithm algorithm = Activator.CreateInstance(algorithmType) as SymmetricAlgorithm)
